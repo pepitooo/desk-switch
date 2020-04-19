@@ -1,4 +1,4 @@
+.idea/*
+cmake-build*
 .pio
-.gcc-flags.json
-.clang_complete
 CMakeListsPrivate.txt
