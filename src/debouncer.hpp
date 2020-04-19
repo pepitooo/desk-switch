@@ -33,6 +33,7 @@ struct debounce_t {
     unsigned long last_debounce_time = 0; // the last time the output pin was toggled
     unsigned long debounce_delay_ms = 50;
     bool toggle = false;
+    bool close_to_timeout = false;
 };
 
 void debouncer(debounce_t *debounce_struct, int reading, FunctionPointer func) {
@@ -40,17 +41,24 @@ void debouncer(debounce_t *debounce_struct, int reading, FunctionPointer func) {
     if (reading != debounce_struct->last_state) {
         debounce_struct->last_debounce_time = millis();
     }
+
     if ((millis() - debounce_struct->last_debounce_time) > debounce_struct->debounce_delay_ms) {
         if (reading != debounce_struct->state) {
             debounce_struct->state = reading;
 
             if (debounce_struct->state == HIGH) {
-                debounce_struct->toggle = !debounce_struct->toggle;
-                #ifdef __DEBUG__
-                Serial.print("debouncer run function : toggle ");
-                Serial.println(debounce_struct->toggle);
-                #endif
-                func(debounce_struct->toggle);// function action
+                if (debounce_struct->close_to_timeout) {
+                    debounce_struct->close_to_timeout = false;
+                    debounce_struct->last_debounce_time = millis() - 1000;
+                    func(debounce_struct->toggle);// function action
+                } else {
+                    debounce_struct->toggle = !debounce_struct->toggle;
+                    #ifdef __DEBUG__
+                    Serial.print("debouncer run function : toggle ");
+                    Serial.println(debounce_struct->toggle);
+                    #endif
+                    func(debounce_struct->toggle);// function action
+                }
             }
         }
     }
