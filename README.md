@@ -9,10 +9,12 @@ I used push button switch with integrated led.
 
 # usage
 When you press on the switch the relay will be activate and the led will light on.
+
 You can switch it off by pressing again and the led will turn off.
 
 after a certain time (5.5h) the led will blink to remember you there is power (30min), if no action is done, it will switch off automatically
-But if you press the button when blinking, you will have power of one other 6h.
+
+But if you press the button when blinking, you will have power for one other 6h.
 
 # adapt to your needs
 
