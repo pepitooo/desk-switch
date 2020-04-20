@@ -5,12 +5,12 @@
 
 typedef void (* FunctionPointer) (bool);
 
-const int ssr1_pin_input = PD2;
+const int ssr1_pin_input = PD2; // switch
 const int ssr1_pin_output = PD4;
 const int ssr1_led_pin_output = PD6;
 debounce_t ssr1_debounce;
 
-const int ssr2_pin_input = PD3;
+const int ssr2_pin_input = PD3; // switch
 const int ssr2_pin_output = PD5;
 const int ssr2_led_pin_output = PD7;
 debounce_t ssr2_debounce;
